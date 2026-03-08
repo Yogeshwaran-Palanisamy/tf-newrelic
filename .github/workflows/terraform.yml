@@ -1,5 +1,11 @@
 name: 'Terraform'
 on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run the workflow on'
+        required: true
+        default: 'main'
   push:
     branches: [ "main" ]
   pull_request:
@@ -12,16 +18,18 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-    env:
-      NEW_RELIC_API_KEY: ${{ secrets.NEWRELIC_API_KEY }}
     defaults:
       run:
         shell: bash
         working-directory: ./data-partition
+    env:
+      NEW_RELIC_API_KEY: ${{ secrets.NEWRELIC_API_KEY }}
 
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.inputs.branch || github.ref }}
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1

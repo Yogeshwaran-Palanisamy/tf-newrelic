@@ -1,0 +1,33 @@
+name: Deploy Newrelic resource via Terraform
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy Newrelic
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./data-partition
+    env:
+        TF_VAR_newrelic_api_key: ${{ secrets.NEWRELIC_API_KEY }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v2
+      
+      - uses: hashicorp/setup-terraform@v3
+        with:
+            terraform_version: "1.14.6"
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform plan
+        run: terraform plan -out plan.tfplan
+        
+      - name: Terraform apply
+        run: terraform apply -auto-approve plan.tfplan

@@ -13,7 +13,7 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     env:
-      TF_VAR_NEWRELIC_API_KEY: ${{ secrets.NEWRELIC_API_KEY }}
+      NEW_RELIC_API_KEY: ${{ secrets.NEWRELIC_API_KEY }}
     defaults:
       run:
         shell: bash

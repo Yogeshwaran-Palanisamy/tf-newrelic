@@ -23,7 +23,7 @@ jobs:
         shell: bash
         working-directory: ./data-partition
     env:
-      NEW_RELIC_API_KEY: ${{ secrets.NEWRELIC_API_KEY }}
+      NEW_RELIC_API_KEY: ${{ secrets.TF_VAR_NEWRELIC_API_KEY }}
 
     steps:
     - name: Checkout

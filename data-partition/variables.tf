@@ -23,5 +23,9 @@ variable "rules" {
   ]
 }
 
+variable "NEWRELIC_API_KEY" {
+  type = string
+}
+
 
 
